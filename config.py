@@ -18,7 +18,7 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('PROD_DATABASE_URL')
 
 
 class TestingConfig(Config):
@@ -55,5 +55,5 @@ config = {
     'production': ProductionConfig,
     'unix': UnixConfig,
 
-    'default': ProductionConfig
+    'default': DevelopmentConfig
 }
