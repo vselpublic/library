@@ -1,0 +1,97 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}Lets make poLibrary!{% endblock %}
+{% block head %}
+{{ super() }}
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+{% endblock %}
+{% block navbar %}
+<div class="container" id="topnavbar">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+				<div class="navbar-header">
+					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" style="margin-bottom: 10px;"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="/">Library!</a>
+				</div>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav navbar-right">
+						{% if not current_user.is_authenticated() %}
+						<li>
+							<a href="{{ url_for('auth.login') }}"> <span class="glyphicon glyphicon-log-in"></span> Log In</a>
+						</li>
+						<li>
+							<a href="{{ url_for('auth.register') }}"> <span class="glyphicon"></span>Sign IN</a>
+						</li>
+						{% endif %}
+						{% if current_user.is_authenticated() %}
+						<li class="dropdown">
+							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Actions <strong class="caret"></strong></a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="{{ url_for('main.show_questions',username=current_user.username) }}">All Questions</a>
+								</li>
+								<li>
+									<a href="{{ url_for('main.show_my_questions',username=current_user.username) }}">My Questions</a>
+								</li>
+								<li class="divider">
+								</li>
+								<li>
+									<a href="{{ url_for('auth.logout') }}">Log Out</a>
+								</li>
+							</ul>
+						</li>
+						{% endif %}
+					</ul>
+					{% if current_user.is_authenticated() %}
+					<form class="navbar-form" role="search" action="{{ url_for('main.search_for_question') }}" method="Post">
+                            <div class="input-group">
+								<input type="text" class="form-control" placeholder="Search for a question..." name="search_text">
+								<span class="input-group-btn">
+									<button type="submit" class="btn btn-default">
+										<span class="glyphicon glyphicon-search">
+											<span class="sr-only">Search for a question...</span>
+										</span>
+									</button>
+								</span>
+							</div>
+					</form>
+					{% endif %}
+				</div>
+			</nav>
+		</div>	
+	</div>
+</div>
+{% endblock %}
+{% block content %}
+<div id="content">
+	<div class="container">
+	    {% for message in get_flashed_messages() %}
+		    <div class="alert alert-warning">
+		        <button type="button" class="close" data-dismiss="alert">&times;</button>
+		        {{ message }}
+		    </div>
+	    {% endfor %}
+	</div>
+</div>
+{% block page_content%}<div id="page_content"></div>{% endblock %}
+{% block footer %}
+        <div id="footer">
+	        <div id="footer" style="margin-top:5px; background-color:#DFEFF0">
+			 	<div class="container">
+			      <p class="navbar-text pull-left">© 2015 - Site D4F
+			           <a href="/" target="_blank">Comunity</a>
+			      </p>
+			      <a href="/" class="navbar-btn btn-danger btn pull-right">
+			      <span class="glyphicon glyphicon-star"></span> GO UP</a>
+			    </div>
+			</div>
+		</div>
+{% endblock %}
+</div>
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+{{ moment.include_moment() }}
+{% endblock %}

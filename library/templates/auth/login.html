@@ -1,0 +1,20 @@
+{% extends "proto.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Library! - Login{% endblock %}
+
+{% block page_content %}
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<div class="jumbotron">
+                <h1>Login</h1>
+			     {{ wtf.quick_form(form) }}
+                <br>
+                <p>New user? <a href="{{ url_for('auth.register') }}">Click here to register</a>.</p>
+			</div>
+		</div>
+	</div>
+</div>
+{{super()}}
+{% endblock %}

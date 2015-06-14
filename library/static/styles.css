@@ -1,0 +1,33 @@
+body { padding-top: 60px; 
+}
+section {
+    padding-top: 70px;
+    padding-bottom: 50px;
+    min-height: calc(100% - 60px);
+}
+html, body {
+    height: 100%;
+    background: url("") no-repeat fixed center center / cover transparent;
+}
+#section1 {
+    background-color: #214559;
+    color: #DEDEFF;
+}
+#section2 {
+    background-color: #A6C0CF;
+    color: #000;
+}
+#section3 {
+    background-color: #3E4144;
+    color: #DEDEFF;
+}
+.container-fluid {
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.v-center {
+    padding-top: 10%;
+    font-size: 70px;
+}
