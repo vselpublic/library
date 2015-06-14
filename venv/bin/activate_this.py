@@ -11,6 +11,7 @@ except NameError:
     raise AssertionError(
         "You must run this like execfile('path/to/activate_this.py', dict(__file__='path/to/activate_this.py'))")
 import sys
+
 import os
 
 old_os_path = os.environ['PATH']
@@ -22,6 +23,7 @@ else:
     site_packages = os.path.join(base, 'lib', 'python%s' % sys.version[:3], 'site-packages')
 prev_sys_path = list(sys.path)
 import site
+
 site.addsitedir(site_packages)
 sys.real_prefix = sys.prefix
 sys.prefix = base

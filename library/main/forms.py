@@ -1,16 +1,14 @@
 from flask.ext.wtf import Form
-from flask.ext.pagedown.fields import PageDownField
-from wtforms import StringField, TextAreaField, BooleanField, SelectField,\
-SubmitField
-from wtforms.validators import Required, Length, Email, Regexp
-from wtforms import ValidationError
+from wtforms import StringField, TextAreaField, SubmitField
+from wtforms.validators import Required, Length
 
 
 class AddQuestionForm(Form):
-    questionname = PageDownField("", validators=[Required()])
-    submit = SubmitField('Add')
+    questionname = StringField('Question Title', validators=[Required(), Length(1, 128)])
+    questiontext = TextAreaField('Question Body', validators=[Required(), Length(1, 999)])
+    submit = SubmitField('Add Question')
 
 
 class AddAnswerForm(Form):
-    text = PageDownField("", validators=[Required()])
+    text = StringField('Your Answer', validators=[Required(), Length(1, 999)])
     submit = SubmitField('Answer')

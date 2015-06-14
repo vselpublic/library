@@ -1,10 +1,27 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+{% extends "proto.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 
-</body>
-</html>
+{% block title %}Library! - Questions{% endblock %}
+{% block page_content %}
+{% for question in questions %}
+<li class="question">
+    <div class="question-content">
+        <div class="question-date">{{ moment(question.timestamp).fromNow() }}</div>
+        <div class="question-author"><h1>{{ question.author.username }}</h1></div>
+        <div class="question-body">
+            <h3>{{ question.text }}</h3>
+        </div>
+        <div class="question-footer">
+            <a href="{{ url_for('.show_question', id=question.id) }}">
+                <span class="label label-default">Link</span>
+            </a>
+        </div>
+    </div>
+</li>
+{% endfor %}
+{% if current_user.is_authenticated() %}
+<div class="question-form">
+    {{ wtf.quick_form(form) }}
+</div>
+{% endif %}
+{% endblock %}%}

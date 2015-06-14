@@ -31,4 +31,5 @@ License: BSD (see docs/LICENSE for details).
 
 if __name__ == '__main__':
     from markdown.__main__ import run
+
     run()

@@ -1,9 +1,9 @@
 #!/opt/vsel/PyProjects/libwar/venv/bin/python
 
 # -*- coding: utf-8 -*-
-import re
 import sys
 
+import re
 from setuptools.command.easy_install import main
 
 if __name__ == '__main__':

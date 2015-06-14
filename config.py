@@ -1,6 +1,8 @@
 # -*- coding: utf8 -*-
 import os
+
 basedir = os.path.abspath(os.path.dirname(__file__))
+
 
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or '867asfdvvvastf76fguyasdfyYY555%$##$!%67QE&*ER*&R*'
@@ -8,10 +10,11 @@ class Config:
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_RECORD_QUERIES = True
     DATABASE_QUERY_TIMEOUT = 0.5
-    
+
     @staticmethod
     def init_app(app):
         pass
+
 
 class DevelopmentConfig(Config):
     DEBUG = True
@@ -40,9 +43,11 @@ class UnixConfig(ProductionConfig):
         # log to syslog
         import logging
         from logging.handlers import SysLogHandler
+
         syslog_handler = SysLogHandler()
         syslog_handler.setLevel(logging.WARNING)
         app.logger.addHandler(syslog_handler)
+
 
 config = {
     'development': DevelopmentConfig,

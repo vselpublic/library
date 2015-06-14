@@ -1,12 +1,11 @@
 from datetime import datetime
+
 from . import db, login_manager
 from flask.ext.login import UserMixin, AnonymousUserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-from markdown import markdown
-import bleach
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
-from sqlalchemy.ext.declarative import declarative_base
+
 
 # TODO: All this things to Model of MVC. In this script only dao.
 
@@ -17,6 +16,11 @@ def repr_all(**kwargs):
     return representation
 
 
+likes_users_to_answers_association_table = db.Table('lua',
+                                                    db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
+                                                    db.Column('answers_id', db.Integer, db.ForeignKey('answers.id')))
+
+
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -25,7 +29,7 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128), nullable=False)
     # confirmed=db.Column(db.Boolean, default=False) for future purpouse
     # token=db.Column(db.Text()) for future purpouse
-    answers = db.relationship('Answer', lazy = 'dynamic', backref = 'author')
+    answers = db.relationship('Answer', lazy='dynamic', backref='author')
     questions = db.relationship('Question', backref='author', lazy='dynamic')
 
     def __repr__(self):
@@ -65,7 +69,7 @@ class Question(db.Model):
     text = db.Column(db.String(999), index=True)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     userid = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    answers = db.relationship('Answer', lazy = "dynamic", backref = 'question')
+    answers = db.relationship('Answer', lazy="dynamic", backref='question')
 
     def __repr__(self):
         return '<questionname %r>' % self.questionname
@@ -77,11 +81,13 @@ class Answer(db.Model):
     userid = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     questionid = db.Column(db.Integer, db.ForeignKey('questions.id'), nullable=False)
     text = db.Column(db.String(999))
-    likes = db.Column(db.Integer, index=True)
+    likes = db.relationship("User", secondary=likes_users_to_answers_association_table,
+                            backref=db.backref("likes", lazy='dynamic'))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
     def __repr__(self):
-        return '<User %r , question %r, Text %r>' % self.userid, self.questionid, self.text
+        representation = repr_all(userid=self.userid, questionid=self.questionid, text=self.text)
+        return representation
 
 
 class Anonymous(AnonymousUserMixin):

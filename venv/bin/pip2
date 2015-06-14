@@ -1,9 +1,9 @@
 #!/opt/vsel/PyProjects/libwar/venv/bin/python
 
 # -*- coding: utf-8 -*-
-import re
 import sys
 
+import re
 from pip import main
 
 if __name__ == '__main__':

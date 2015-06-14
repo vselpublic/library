@@ -1,0 +1,26 @@
+{% extends "proto.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Library - Question{% endblock %}
+
+{% block page_content %}
+<li class="question">
+    <div class="question-content">
+        <div class="question-date">{{ moment(question.timestamp).fromNow() }}</div>
+        <div class="question-author">
+            <h0>{{ question.author.username }}</h0>
+        </div>
+        <div class="question-body">
+            <h2>{{ question.text }}</h2>
+        </div>
+        <div class="question-footer">
+        </div>
+    </div>
+</li>
+{% if current_user.is_authenticated() %}
+<div class="answer-form">
+    {{ wtf.quick_form(form) }}
+</div>
+{% endif %}
+{% include '_answers.html' %}
+{% endblock %}

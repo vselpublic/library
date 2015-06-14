@@ -1,7 +1,8 @@
 import unittest
-from flask import current_app, url_for
+
 from library import create_app, db
 from library.dao import User
+
 
 class DAOTestCase(unittest.TestCase):
     def setUp(self):
@@ -20,15 +21,14 @@ class DAOTestCase(unittest.TestCase):
         user = User(username="test12",
                     password="test1234")
         db.session.add(user)
-        #This must be broken!!!! Used for "must have errors" searching
+        # This must be broken!!!! Used for "must have errors" searching
         with self.assertRaises(Exception) as context:
             db.session.commit()
         self.assertTrue(context.exception)
-        
-        
+
     def test_useradd_everything_fine(self):
         user = User(username="test12",
-                    email = "123@123.ua",
+                    email="123@123.ua",
                     password="test1234")
         db.session.add(user)
         self.assertTrue(db.session.commit() is not False)
