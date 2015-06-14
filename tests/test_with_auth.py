@@ -2,7 +2,7 @@ import unittest
 
 from flask import current_app, url_for
 from library import create_app, db
-from library.dao import User, Chat
+from library.dao import User, Question
 import re
 
 
@@ -16,13 +16,13 @@ class BasicsTestCase(unittest.TestCase):
         user1 = User(email="test1@123.ua",
                      username="test1",
                      password="test1234")
-        chat1 = Chat(chatname="test123")
+        question1 = Question(questionname="test123")
         user2 = User(email="test2@123.ua",
                      username="test2",
                      password="test1234")
-        chat2 = Chat(chatname="test12")
-        db.session.add(chat1)
-        db.session.add(chat2)
+        question2 = Question(questionname="test12")
+        db.session.add(question1)
+        db.session.add(question2)
         db.session.add(user1)
         db.session.add(user2)
         db.session.commit()
